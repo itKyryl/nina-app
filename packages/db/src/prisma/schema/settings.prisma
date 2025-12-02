@@ -1,0 +1,12 @@
+model Settings {
+    id         Int      @id @default(autoincrement())
+    createDate DateTime @default(now())
+    updateDate DateTime @updatedAt
+
+    isActive         Boolean
+    name             String
+    minWorkerThreads Int
+    maxWorkerThreads Int
+
+    @@map("settings")
+}

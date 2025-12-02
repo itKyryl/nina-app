@@ -1,0 +1,15 @@
+model Log {
+    id         Int      @id @default(autoincrement())
+    createDate DateTime @default(now())
+
+    name     String?
+    message  String?
+    isError  Boolean
+    workerId Int?
+    stack    String?
+    request  String?
+    response String?
+    data     String?
+
+    @@map("log")
+}

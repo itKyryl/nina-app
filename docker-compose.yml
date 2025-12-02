@@ -1,0 +1,25 @@
+services:
+  postgres-nina:
+    restart: always
+    image: postgres:latest
+    container_name: postgres-nina
+    env_file:
+      - .env
+    environment:
+      - POSTGRES_DB=${POSTGRES_DATABASE}
+      - POSTGRES_USER=${POSTGRES_USERNAME}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_SSLMODE=require
+    command: ["postgres", "-c", "max_connections=500"]
+    networks:
+      - nina-workspace
+    ports:
+      - ${POSTGRES_PORT}:5432
+    volumes:
+      - postgres-nina:/var/lib/postgresql
+volumes:
+  postgres-nina:
+    name: postgres-nina
+networks:
+  nina-workspace:
+    name: nina-workspace

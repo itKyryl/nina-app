@@ -1,7 +1,11 @@
 {
-  "name": "nina-app",
+  "name": "proxy",
   "private": true,
   "scripts": {
+    "up": "docker compose up -d && pnpm run migrate && pnpm run build && pm2 start",
+    "migrate": "pnpm run up-db && turbo run migrate",
+    "type-check": "turbo run type-check",
+    "up-db": "docker compose up --build -d postgres-nina",
     "build": "turbo run build",
     "dev": "turbo run dev",
     "lint": "turbo run lint",
@@ -16,5 +20,10 @@
   "packageManager": "pnpm@9.0.0",
   "engines": {
     "node": ">=18"
+  },
+  "dependencies": {
+    "@prisma/client": "7.0.1",
+    "@prisma/client-runtime-utils": "^7.0.1",
+    "dotenv": "^17.2.3"
   }
 }

@@ -1,0 +1,31 @@
+{
+  "name": "@repo/core",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "jest",
+    "type-check": "tsc --noEmit"
+  },
+  "exports": {
+    "./*": "./src/*.ts"
+  },
+  "packageManager": "pnpm@9.0.0",
+  "devDependencies": {
+    "@repo/db": "workspace:*",
+    "@repo/eslint-config": "workspace:*",
+    "@repo/typescript-config": "workspace:*",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^22.15.3",
+    "dotenv": "^17.2.3",
+    "eslint": "^9.34.0",
+    "jest": "^30.2.0",
+    "ts-jest": "^29.4.5",
+    "typescript": "5.9.2"
+  },
+  "dependencies": {
+    "@types/big.js": "^6.2.2",
+    "axios": "^1.13.2",
+    "big.js": "^7.0.1",
+    "piscina": "^5.1.4",
+    "zod": "^4.1.12"
+  }
+}
