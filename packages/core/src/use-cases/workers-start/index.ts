@@ -23,6 +23,8 @@ export default class WorkersStartUseCase
   async execute(
     input: WorkersStartUseCaseInputDto,
   ) {
+
+    console.log('Test 5');
     let activeSettings = await this.getActiveSettings();
 
     const pool = new Piscina({
@@ -33,7 +35,9 @@ export default class WorkersStartUseCase
 
     while (true) {
       const tasks = await this.dependency.taskDatabaseRepository.findMany({
-        status: 'PENDING'
+        status: {
+          eq: 'PENDING'
+        }
       });
       
       for(const task of tasks) {
@@ -43,13 +47,17 @@ export default class WorkersStartUseCase
           await this.dependency.taskDatabaseRepository.update(task.id, {
             error: null,
             status: "DONE",
-            result: result
+            result: result,
+            startTime: new Date(),
+
+
           })
         } catch (e: any) {
           const logNumber = await handleLog(e);
           await this.dependency.taskDatabaseRepository.update(task.id, {
             error: `Error message: ${e.message}. Full log ${logNumber}`,
-            status: 'FAILED'
+            status: 'FAILED',
+            endTime: new Date()
           })
         }
       }

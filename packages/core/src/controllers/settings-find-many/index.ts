@@ -1,6 +1,6 @@
 import { BaseController } from "../BaseController";
-import { SettingsFindManyUseCase } from "../../use-cases";
 import { SettingsFindManyUseCaseInputDto, SettingsFindManyUseCaseOutputDto } from "../../domain/use-cases/settings-find-many.types";
+import SettingsFindManyUseCase from "../../use-cases/settings-find-many";
 
 class SettingsFindManyController extends BaseController<SettingsFindManyUseCaseInputDto, SettingsFindManyUseCaseOutputDto, void> {
   constructor(private readonly dependency: { useCase: SettingsFindManyUseCase; }

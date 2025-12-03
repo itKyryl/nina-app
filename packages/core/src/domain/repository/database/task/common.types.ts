@@ -1,7 +1,13 @@
 import z from "zod";
 
 export type TaskFilters = {
-    status?: TaskStatusDto
+    status?: {
+        eq?: TaskStatusDto,
+        in?: TaskStatusDto[]
+    },
+    take?: number,
+    orderBy?: Partial<Record<keyof Pick<TaskBaseDto, 'createDate'>, 'asc' | 'desc'>>;
+    taskLoopId?: number
 }
 
 const taskStatusEnum = {
@@ -18,7 +24,10 @@ export type TaskBaseDto = {
     type: TaskTypeDto
     payload: any
     result: any,
-    createDate: Date
+    createDate: Date,
+    startTime: Date | null,
+    endTime: Date | null,
+    taskLoopId: number | null
 };
 
 

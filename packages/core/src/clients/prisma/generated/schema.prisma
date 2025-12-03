@@ -1,0 +1,88 @@
+model Log {
+  id         Int      @id @default(autoincrement())
+  createDate DateTime @default(now())
+
+  name     String?
+  message  String?
+  isError  Boolean
+  workerId Int?
+  stack    String?
+  request  String?
+  response String?
+  data     String?
+
+  @@map("log")
+}
+
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Settings {
+  id         Int      @id @default(autoincrement())
+  createDate DateTime @default(now())
+  updateDate DateTime @updatedAt
+
+  isActive         Boolean
+  name             String
+  minWorkerThreads Int
+  maxWorkerThreads Int
+
+  @@map("settings")
+}
+
+model TaskLoop {
+  id         Int      @id @default(autoincrement())
+  createDate DateTime @default(now())
+  updateDate DateTime @default(now()) @updatedAt
+
+  type        TaskType
+  payload     Json?
+  intervalMin Float
+  isActive    Boolean
+
+  tasks Task[]
+
+  @@map("task-loop")
+}
+
+model Task {
+  id         Int      @id @default(autoincrement())
+  createDate DateTime @default(now())
+  updateDate DateTime @default(now()) @updatedAt
+
+  type      TaskType
+  payload   Json?
+  status    TaskStatus @default(PENDING) // pending | running | done | failed
+  result    Json?
+  error     String?
+  startTime DateTime?
+  endTime   DateTime?
+
+  taskLoopId Int?
+  taskLoop   TaskLoop? @relation(fields: [taskLoopId], references: [id])
+
+  @@map("task")
+}
+
+enum TaskType {
+  COLLECT_TRAFFIC_SOURCE_DATA
+}
+
+enum TaskStatus {
+  PENDING
+  RUNNING
+  FAILED
+  DONE
+}

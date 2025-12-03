@@ -1,0 +1,14 @@
+model TaskLoop {
+    id         Int      @id @default(autoincrement())
+    createDate DateTime @default(now())
+    updateDate DateTime @default(now()) @updatedAt
+
+    type        TaskType
+    payload     Json?
+    intervalMin Float
+    isActive    Boolean
+
+    tasks Task[]
+
+    @@map("task-loop")
+}

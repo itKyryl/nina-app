@@ -1,5 +1,5 @@
 import { WorkersStartUseCaseInputDto, WorkersStartUseCaseOutputDto } from "../../domain/use-cases/workers-start.types";
-import { WorkersStartUseCase } from "../../use-cases";
+import WorkersStartUseCase from "../../use-cases/workers-start";
 import { BaseController } from "../BaseController";
 
 class WorkersStartController extends BaseController<WorkersStartUseCaseInputDto, WorkersStartUseCaseOutputDto, void> {

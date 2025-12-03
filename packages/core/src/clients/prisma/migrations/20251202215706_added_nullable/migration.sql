@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "task" ALTER COLUMN "endTime" DROP NOT NULL,
+ALTER COLUMN "startTime" DROP NOT NULL;

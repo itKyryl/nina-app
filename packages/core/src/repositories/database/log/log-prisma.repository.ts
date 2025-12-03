@@ -1,4 +1,4 @@
-import { PrismaRepositoryClient } from "../../../../../db/src";
+import { PrismaRepositoryClient } from "../../../clients/prisma";
 import { CreateLogInputDataT } from "../../../domain/repository/database/log/create-log.types";
 import ILogDatabaseRepository from "./log-database.repository.iterface";
 

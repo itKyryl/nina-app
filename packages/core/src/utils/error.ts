@@ -1,4 +1,4 @@
-import prisma from "../../../db/src";
+import prisma from "../clients/prisma";
 import {
   CreateLogInputDataT,
   CustomError,

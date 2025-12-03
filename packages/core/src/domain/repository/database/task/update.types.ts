@@ -1,6 +1,3 @@
-import { TaskBaseDto } from "./common.types";
+import { TaskCreateDto } from "./create.types";
 
-export type TaskUpdateDto = Partial<(Omit<TaskBaseDto, 'id' | 'createDate' | 'updateDate' | 'payload' | 'result'> & {
-    result: Record<string, any>,
-    payload: Record<string, any>
-})>
+export type TaskUpdateDto = Partial<TaskCreateDto>;

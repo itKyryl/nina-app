@@ -1,5 +1,5 @@
 import LogPrismaRepository from "./log-prisma.repository";
-import prisma from '../../../../../db/src';
+import prisma from '../../../clients/prisma';
 
 describe(LogPrismaRepository.name, () => {
   const logRepository = new LogPrismaRepository(prisma);

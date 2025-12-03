@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "task-loop" ALTER COLUMN "intervalMin" SET DATA TYPE DOUBLE PRECISION;

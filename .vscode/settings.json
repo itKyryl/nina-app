@@ -1,8 +1,6 @@
 {
   "eslint.workingDirectories": [
-    {
-      "mode": "auto"
-    }
+    "src"
   ],
   "typescript.tsdk": "node_modules/typescript/lib"
 }

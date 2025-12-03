@@ -1,16 +1,26 @@
 {
   "name": "@repo/core",
   "version": "1.0.0",
+  "main": "dist/index.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "test": "jest",
-    "type-check": "tsc --noEmit"
+    "type-check": "tsc --noEmit",
+    "build": "tsc && rm -rf dist/clients/prisma/generated && cp -r src/clients/prisma/generated dist/clients/prisma/generated",
+    "generate": "dotenv -e ./../../.env prisma generate",
+    "migrate": "dotenv -e ./../../.env prisma migrate dev && pnpm run generate",
+    "seed": "dotenv -e ./../../.env ts-node ./src/clients/prisma/seed/index.ts"
   },
   "exports": {
-    "./*": "./src/*.ts"
+    "./*": {
+      "types": "./src/*.ts",
+      "default": "./dist/*.js"
+    }
   },
   "packageManager": "pnpm@9.0.0",
   "devDependencies": {
-    "@repo/db": "workspace:*",
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@types/jest": "^30.0.0",
@@ -22,10 +32,14 @@
     "typescript": "5.9.2"
   },
   "dependencies": {
+    "@prisma/adapter-pg": "^7.0.1",
+    "@prisma/client": "^7.0.1",
     "@types/big.js": "^6.2.2",
     "axios": "^1.13.2",
     "big.js": "^7.0.1",
+    "moment": "^2.30.1",
     "piscina": "^5.1.4",
+    "prisma": "^7.0.1",
     "zod": "^4.1.12"
   }
 }

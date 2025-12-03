@@ -6,7 +6,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
     "type-check": "tsc --noOmit",
-    "start": "node ./dist/index.js"
+    "start": "node ./dist/index.js",
+    "dev": "dotenv -e ./../../.env -- nodemon --watch src --exec 'node --conditions=development -r ts-node/register src/index.ts'"
   },
   "keywords": [],
   "author": "",
@@ -19,10 +20,8 @@
   },
   "dependencies": {
     "@repo/core": "workspace:*",
-    "@repo/db": "workspace:*",
     "@repo/eslint-config": "workspace:*",
-    "@repo/typescript-config": "workspace:*",
-    "piscina": "^5.1.4"
+    "@repo/typescript-config": "workspace:*"
   },
   "packageManager": "pnpm@9.0.0"
 }

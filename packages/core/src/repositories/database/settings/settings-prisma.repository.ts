@@ -1,4 +1,5 @@
-import { Prisma, PrismaRepositoryClient } from "../../../../../db/src";
+import { PrismaRepositoryClient } from "../../../clients/prisma";
+import { Prisma } from "../../../clients/prisma/generated";
 import { SettingsBaseDto, SettingsFilters } from "../../../domain/repository/database/settings/common.types";
 import { createPrismaSelect, createPrismaWhere } from "../../../utils/prisma";
 import ISettingsDatabaseRepository from "./settings-database.repository.interface";

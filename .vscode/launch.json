@@ -1,0 +1,29 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Core Jest current file (Windows-safe)",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/jest-runner.js",
+      "args": ["--config", "${workspaceFolder}/packages/core/jest.config.js", "--runInBand", "${file}"],
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal"
+    },
+    {
+      "type": "node",
+      "request": "attach",
+      "name": "Workers Debug",
+      "port": 9229,
+      "protocol": "inspector",
+      "restart": true,
+      "skipFiles": ["<node_internals>/**"],
+      "cwd": "${workspaceFolder}/apps/workers",
+      "sourceMaps": true,
+      "outFiles": ["${workspaceFolder}/apps/workers/**/*.ts", "${workspaceFolder}/packages/core/src/**/*.ts"]
+    }
+  ]
+}

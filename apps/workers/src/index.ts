@@ -1,8 +1,12 @@
-import { WorkersStartController } from '@repo/core/controllers/index';
-import { WorkersStartUseCase } from '@repo/core/use-cases/index';
-import { SettingsPrismaRepository, TaskPrismaRepository } from '@repo/core/repositories/database/index';
-import prisma from '../../../packages/db/src';
 import path from 'path';
+import WorkersStartController from '@repo/core/controllers/workers-start/index';
+import SettingsPrismaRepository from '@repo/core/repositories/database/settings/settings-prisma.repository';
+import TaskPrismaRepository from '@repo/core/repositories/database/task/task-prisma.repository';
+import prisma from '@repo/core/clients/prisma/index';
+import WorkersStartUseCase from '@repo/core/use-cases/workers-start/index';
+import TaskLoopStartController from '@repo/core/controllers/task-loop-start/index';
+import TaskLoopStartUseCase from '@repo/core/use-cases/task-loop-start/index';
+import TaskLoopPrismaRepository from '@repo/core/repositories/database/task-loop/task-loop-prisma.repository';
 
 const workersStartController = new WorkersStartController({
   useCase: new WorkersStartUseCase({
@@ -11,10 +15,26 @@ const workersStartController = new WorkersStartController({
   })
 })
 
-const main = async () => {
-  await workersStartController.runUseCaseImplementation({
-    handlerPath: path.resolve(__dirname, 'tasks', 'index.js')
+const taskLoopStartController = new TaskLoopStartController({
+  useCase: new TaskLoopStartUseCase({
+    taskDatabaseRepository: new TaskPrismaRepository(prisma),
+    taskLoopDatabaseRepository: new TaskLoopPrismaRepository(prisma)
   })
+})
+
+const main = async () => {
+  
+
+  await Promise.all(
+    [
+      // run workers / tasks
+      workersStartController.runUseCaseImplementation({
+        handlerPath: path.resolve(__dirname, '..', 'dist', 'tasks', 'index.js')
+      }),
+      // run task loop creator
+      taskLoopStartController.runUseCaseImplementation()
+    ]
+  )
 }
 
 main();
