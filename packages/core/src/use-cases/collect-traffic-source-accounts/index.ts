@@ -119,7 +119,7 @@ export default class CollectTrafficSourceAccountsUseCase
     }
 
     return {
-      collectedAccounts: createdOrUpdatedAccountIds
+      collectedAccounts: createdOrUpdatedAccountIds.length
     }
   }
 

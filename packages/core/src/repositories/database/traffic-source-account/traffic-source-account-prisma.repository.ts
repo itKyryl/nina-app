@@ -9,6 +9,7 @@ import { createPrismaSelect, createPrismaWhere } from "../../../utils";
 import { createApiAccessBaseSelect } from "../api-access/api-access-prisma.repository";
 import ITrafficSourceAccountDatabaseRepository from "./traffic-source-account-database.repository.interface";
 import { DateTime } from "luxon";
+import moment from "moment-timezone";
 
 export default class TrafficSourceAccountPrismaRepository implements ITrafficSourceAccountDatabaseRepository {
 
@@ -54,8 +55,8 @@ export default class TrafficSourceAccountPrismaRepository implements ITrafficSou
                 in: accountsCollectedChunk
               },
               externalDateStart: {
-                gte: filters.include.spend.dateFrom ? DateTime.fromISO(filters.include.spend.dateFrom, { zone: timezone }).startOf('day').toJSDate() : undefined,
-                lte: filters.include.spend.dateTo ? DateTime.fromISO(filters.include.spend.dateTo, { zone: timezone }).endOf('day').toJSDate() : undefined,
+                gte: filters.include.spend.dateFrom ? moment.tz(filters.include.spend.dateFrom, timezone).startOf('day').toDate() : undefined,
+                lte: filters.include.spend.dateTo ? moment.tz(filters.include.spend.dateTo, timezone).endOf('day').toDate() : undefined,
               }
             }
           })
