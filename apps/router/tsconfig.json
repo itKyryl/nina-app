@@ -1,0 +1,15 @@
+{
+  "extends": "@repo/typescript-config/base.json",
+  "compilerOptions": {
+    "strictNullChecks": true,
+    "strictPropertyInitialization": false,
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "baseUrl": ".",
+    "isolatedModules": false,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
+}

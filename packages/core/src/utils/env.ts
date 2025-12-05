@@ -1,7 +1,7 @@
 const envKeysArray = [
   "NODE_ENV",
 ] as const;
-const nodeEnvArray = ["development", "production"] as const;
+const nodeEnvArray = ["development", "production", 'test'] as const;
 
 export type NODE_ENV = (typeof nodeEnvArray)[number];
 export type ENV = (typeof envKeysArray)[number];

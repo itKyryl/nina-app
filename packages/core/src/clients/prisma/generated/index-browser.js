@@ -120,6 +120,20 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
+exports.Prisma.ApiAccessScalarFieldEnum = {
+  id: 'id',
+  createDate: 'createDate',
+  updateDate: 'updateDate',
+  trafficSourceType: 'trafficSourceType',
+  apiAccessType: 'apiAccessType',
+  isActive: 'isActive',
+  name: 'name',
+  login: 'login',
+  password: 'password',
+  firstAccessToken: 'firstAccessToken',
+  secondAccessToken: 'secondAccessToken'
+};
+
 exports.Prisma.LogScalarFieldEnum = {
   id: 'id',
   createDate: 'createDate',
@@ -167,6 +181,67 @@ exports.Prisma.TaskScalarFieldEnum = {
   taskLoopId: 'taskLoopId'
 };
 
+exports.Prisma.TrafficSourceAccountScalarFieldEnum = {
+  id: 'id',
+  createDate: 'createDate',
+  updateDate: 'updateDate',
+  trafficSourceType: 'trafficSourceType',
+  externalId: 'externalId',
+  name: 'name',
+  externalStatus: 'externalStatus',
+  externalCreatedTime: 'externalCreatedTime',
+  status: 'status',
+  balance: 'balance',
+  externalCurrency: 'externalCurrency',
+  externalTimezone: 'externalTimezone',
+  spendCap: 'spendCap',
+  amountSpent: 'amountSpent',
+  isActive: 'isActive',
+  trafficSourceOwnerBmId: 'trafficSourceOwnerBmId'
+};
+
+exports.Prisma.TrafficSourceAccountToTrafficSourceBmScalarFieldEnum = {
+  id: 'id',
+  createDate: 'createDate',
+  updateDate: 'updateDate',
+  trafficSourceBmId: 'trafficSourceBmId',
+  trafficSourceAccountId: 'trafficSourceAccountId'
+};
+
+exports.Prisma.TrafficSourceBmScalarFieldEnum = {
+  id: 'id',
+  createDate: 'createDate',
+  updateDate: 'updateDate',
+  trafficSourceType: 'trafficSourceType',
+  externalId: 'externalId',
+  name: 'name',
+  isActive: 'isActive'
+};
+
+exports.Prisma.TrafficSourceBmToApiAccessScalarFieldEnum = {
+  id: 'id',
+  createDate: 'createDate',
+  updateDate: 'updateDate',
+  trafficSourceBmId: 'trafficSourceBmId',
+  apiAccessId: 'apiAccessId'
+};
+
+exports.Prisma.TrafficSourceDailyAdStatScalarFieldEnum = {
+  id: 'id',
+  createDate: 'createDate',
+  updateDate: 'updateDate',
+  spend: 'spend',
+  clicks: 'clicks',
+  externalAdId: 'externalAdId',
+  externalAdSetId: 'externalAdSetId',
+  externalCampaignId: 'externalCampaignId',
+  impressions: 'impressions',
+  externalDateStart: 'externalDateStart',
+  externalDateStop: 'externalDateStop',
+  trafficSourceType: 'trafficSourceType',
+  trafficSourceAccountId: 'trafficSourceAccountId'
+};
+
 exports.Prisma.SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -192,8 +267,19 @@ exports.Prisma.JsonNullValueFilter = {
   JsonNull: Prisma.JsonNull,
   AnyNull: Prisma.AnyNull
 };
+exports.TrafficSourceType = exports.$Enums.TrafficSourceType = {
+  FACEBOOK: 'FACEBOOK',
+  TIKTOK: 'TIKTOK'
+};
+
+exports.ApiAccessType = exports.$Enums.ApiAccessType = {
+  TRAFFIC_SOURCE_SOC: 'TRAFFIC_SOURCE_SOC'
+};
+
 exports.TaskType = exports.$Enums.TaskType = {
-  COLLECT_TRAFFIC_SOURCE_DATA: 'COLLECT_TRAFFIC_SOURCE_DATA'
+  COLLECT_TRAFFIC_SOURCE_BMS: 'COLLECT_TRAFFIC_SOURCE_BMS',
+  COLLECT_TRAFFIC_SOURCE_ACCOUNTS: 'COLLECT_TRAFFIC_SOURCE_ACCOUNTS',
+  COLLECT_TRAFFIC_SOURCE_DAILY_AD_SPEND: 'COLLECT_TRAFFIC_SOURCE_DAILY_AD_SPEND'
 };
 
 exports.TaskStatus = exports.$Enums.TaskStatus = {
@@ -203,11 +289,25 @@ exports.TaskStatus = exports.$Enums.TaskStatus = {
   DONE: 'DONE'
 };
 
+exports.TrafficSourceAccountStatus = exports.$Enums.TrafficSourceAccountStatus = {
+  ACTIVE: 'ACTIVE',
+  BLOCK: 'BLOCK',
+  PAYMENT_ERROR: 'PAYMENT_ERROR',
+  CLOSING: 'CLOSING',
+  EXPIRED: 'EXPIRED'
+};
+
 exports.Prisma.ModelName = {
+  ApiAccess: 'ApiAccess',
   Log: 'Log',
   Settings: 'Settings',
   TaskLoop: 'TaskLoop',
-  Task: 'Task'
+  Task: 'Task',
+  TrafficSourceAccount: 'TrafficSourceAccount',
+  TrafficSourceAccountToTrafficSourceBm: 'TrafficSourceAccountToTrafficSourceBm',
+  TrafficSourceBm: 'TrafficSourceBm',
+  TrafficSourceBmToApiAccess: 'TrafficSourceBmToApiAccess',
+  TrafficSourceDailyAdStat: 'TrafficSourceDailyAdStat'
 };
 
 /**

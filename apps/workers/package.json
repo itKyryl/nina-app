@@ -5,7 +5,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
-    "type-check": "tsc --noOmit",
+    "type-check": "tsc --noEmit",
     "start": "node ./dist/index.js",
     "dev": "dotenv -e ./../../.env -- nodemon --watch src --exec 'node --conditions=development -r ts-node/register src/index.ts'"
   },

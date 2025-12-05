@@ -3,8 +3,8 @@ import ITaskDatabaseRepository from "../../repositories/database/task/task-datab
 import { TaskLoopStartUseCaseInputDto, TaskLoopStartUseCaseOutputDto } from "../../domain/use-cases/task-loop-start.types";
 import ITaskLoopDatabaseRepository from "../../repositories/database/task-loop/task-loop-database.repository.interface";
 import { delay } from "../../utils";
-import moment from "moment";
 import { handleLog } from "../../utils/error";
+import { DateTime } from "luxon";
 
 export default class TaskLoopStartUseCase
   implements
@@ -55,10 +55,10 @@ export default class TaskLoopStartUseCase
                 break;
               }
 
-              const curTime = moment();
-              const timeToStartNewTask = moment(lastTask.endTime).add(taskLoop.intervalMin, 'minutes');
+              const curTime = DateTime.now();
+              const timeToStartNewTask = DateTime.fromJSDate(lastTask.endTime).plus({ minutes: taskLoop.intervalMin});
 
-              if(curTime.isSameOrAfter(timeToStartNewTask)) {
+              if(curTime >= timeToStartNewTask) {
                 newTaskShouldBeCreated = true;
               } else {
                 newTaskShouldBeCreated = false;

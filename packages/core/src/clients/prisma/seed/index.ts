@@ -14,7 +14,7 @@ const defaultSettings = async () => {
         await prisma.settings.create({
             data: {
                 isActive: true,
-                maxWorkerThreads: 2,
+                maxWorkerThreads: 3,
                 minWorkerThreads: 1,
                 name: 'Default'
             }
@@ -33,7 +33,17 @@ const defaultTaskLoops = async () => {
         const createdTasksLoops = await prisma.taskLoop.createMany({
             data: [
                 {
-                    type: 'COLLECT_TRAFFIC_SOURCE_DATA',
+                    type: 'COLLECT_TRAFFIC_SOURCE_BMS',
+                    intervalMin: 60,
+                    isActive: true
+                },
+                {
+                    type: 'COLLECT_TRAFFIC_SOURCE_ACCOUNTS',
+                    intervalMin: 60,
+                    isActive: true
+                },
+                {
+                    type: 'COLLECT_TRAFFIC_SOURCE_DAILY_AD_SPEND',
                     intervalMin: 60,
                     isActive: true
                 }

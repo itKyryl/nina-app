@@ -53,40 +53,40 @@ export default class TaskPrismaRepository implements ITaskDatabaseRepository {
 }
 
 export function createTaskBaseSelect() {
-    return createPrismaSelect<TaskBaseDto>({
-      id: true,
-      type: true,
-      payload: true,
-      result: true,
-      status: true,
-      error: true,
-      createDate: true,
-      endTime: true,
-      startTime: true,
-      taskLoopId: true
-    })
-  }
+  return createPrismaSelect<TaskBaseDto>({
+    id: true,
+    type: true,
+    payload: true,
+    result: true,
+    status: true,
+    error: true,
+    createDate: true,
+    endTime: true,
+    startTime: true,
+    taskLoopId: true
+  })
+}
 
 export function createTaskWhere(filters: TaskFilters) {
-    return createPrismaWhere<TaskFilters, Prisma.TaskWhereInput>(filters, (filters, where) => {
-        if(filters.status?.eq) {
-          where.addWhereConditions({
-            status: filters.status.eq
-          })
-        }
+  return createPrismaWhere<TaskFilters, Prisma.TaskWhereInput>(filters, (filters, where) => {
+      if(filters.status?.eq) {
+        where.addWhereConditions({
+          status: filters.status.eq
+        })
+      }
 
-        if(filters.status?.in) {
-          where.addWhereConditions({
-            status: {
-              in: filters.status.in
-            }
-          })
-        }
+      if(filters.status?.in) {
+        where.addWhereConditions({
+          status: {
+            in: filters.status.in
+          }
+        })
+      }
 
-        if(filters.taskLoopId) {
-          where.addWhereConditions({
-            taskLoopId: filters.taskLoopId
-          })
-        }
-      })
-  }
+      if(filters.taskLoopId) {
+        where.addWhereConditions({
+          taskLoopId: filters.taskLoopId
+        })
+      }
+    })
+}

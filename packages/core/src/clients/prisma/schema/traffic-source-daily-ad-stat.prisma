@@ -1,0 +1,21 @@
+model TrafficSourceDailyAdStat {
+    id         Int      @id @default(autoincrement())
+    createDate DateTime @default(now())
+    updateDate DateTime @default(now()) @updatedAt
+
+    spend              Decimal           @db.Decimal(18, 2)
+    clicks             Int
+    externalAdId       String
+    externalAdSetId    String
+    externalCampaignId String
+    impressions        Int
+    externalDateStart  DateTime
+    externalDateStop   DateTime
+    trafficSourceType  TrafficSourceType
+
+    trafficSourceAccountId Int
+    trafficSourceAccount   TrafficSourceAccount @relation(fields: [trafficSourceAccountId], references: [id], onDelete: Cascade)
+
+    @@unique([externalDateStart, trafficSourceAccountId, externalAdId])
+    @@map("traffic_source_daily_ad_stat")
+}

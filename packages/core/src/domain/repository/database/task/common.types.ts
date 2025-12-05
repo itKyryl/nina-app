@@ -36,7 +36,9 @@ export const taskStatusSchema = z.enum(taskStatusEnum);
 export type TaskStatusDto = z.infer<typeof taskStatusSchema>;
 
 const taskTypeEnum = {
-    COLLECT_TRAFFIC_SOURCE_DATA: "COLLECT_TRAFFIC_SOURCE_DATA",
+    COLLECT_TRAFFIC_SOURCE_DATA: "COLLECT_TRAFFIC_SOURCE_BMS",
+    COLLECT_TRAFFIC_SOURCE_ACCOUNTS: "COLLECT_TRAFFIC_SOURCE_ACCOUNTS",
+    COLLECT_TRAFFIC_SOURCE_DAILY_AD_SPEND: 'COLLECT_TRAFFIC_SOURCE_DAILY_AD_SPEND'
 } as const;
 
 export const taskTypeSchema = z.enum(taskTypeEnum);

@@ -1,0 +1,22 @@
+model ApiAccess {
+    id         Int      @id @default(autoincrement())
+    createDate DateTime @default(now())
+    updateDate DateTime @default(now()) @updatedAt
+
+    trafficSourceType TrafficSourceType?
+    apiAccessType     ApiAccessType
+    isActive          Boolean
+    name              String
+    login             String?
+    password          String?
+    firstAccessToken  String?
+    secondAccessToken String?
+
+    trafficSourceBmToApiAccessConnections TrafficSourceBmToApiAccess[]
+
+    @@map("api_access")
+}
+
+enum ApiAccessType {
+    TRAFFIC_SOURCE_SOC
+}

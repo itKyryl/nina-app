@@ -1,0 +1,31 @@
+model TrafficSourceBm {
+    id         Int      @id @default(autoincrement())
+    createDate DateTime @default(now())
+    updateDate DateTime @default(now()) @updatedAt
+
+    trafficSourceType TrafficSourceType
+    externalId        String
+    name              String
+    isActive          Boolean           @default(true)
+
+    trafficSourceBmToApiAccessConnections            TrafficSourceBmToApiAccess[]
+    trafficSourceAccountToTrafficSourceBmConnections TrafficSourceAccountToTrafficSourceBm[]
+    accountsOwned                                    TrafficSourceAccount[]
+
+    @@unique([trafficSourceType, externalId])
+    @@map("traffic_source_bm")
+}
+
+model TrafficSourceBmToApiAccess {
+    id         Int      @id @default(autoincrement())
+    createDate DateTime @default(now())
+    updateDate DateTime @default(now()) @updatedAt
+
+    trafficSourceBmId Int
+    trafficSourceBm   TrafficSourceBm @relation(fields: [trafficSourceBmId], references: [id], onDelete: Cascade)
+    apiAccessId       Int
+    apiAccess         ApiAccess       @relation(fields: [apiAccessId], references: [id], onDelete: Cascade)
+
+    @@unique([trafficSourceBmId, apiAccessId])
+    @@map("traffic_source_bm_to_api_access")
+}

@@ -12,7 +12,18 @@ module.exports = {
         PORT: "5002",
         NODE_ENV: "production",
       }
-    }
+    },
+    {
+      name: "nina-router",
+      cwd: "./apps/router",
+      script: "pnpm",
+      args: "start",
+      env_file: ".env",
+      env: {
+        PORT: "5008",
+        NODE_ENV: "production"
+      }
+    },
   ],
   watch: false,          // disable watch in production
   restart_delay: 5000,    // wait 5s before restarting (prevents loops)

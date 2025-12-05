@@ -23,15 +23,29 @@ export default class WorkersStartUseCase
   async execute(
     input: WorkersStartUseCaseInputDto,
   ) {
-
-    console.log('Test 5');
     let activeSettings = await this.getActiveSettings();
+
+    console.log(`Created Pool with min ${activeSettings.minWorkerThreads} and  max ${activeSettings.maxWorkerThreads} threads.`)
 
     const pool = new Piscina({
       filename: input.handlerPath,
       minThreads: activeSettings.minWorkerThreads,
-      maxThreads: activeSettings.minWorkerThreads,
+      maxThreads: activeSettings.maxWorkerThreads,
     });
+
+    const startupTasksWithRunningStatus = await this.dependency.taskDatabaseRepository.findMany({
+      status: {
+        eq: 'RUNNING'
+      }
+    });
+
+    for(let runningTask of startupTasksWithRunningStatus) {
+      await this.dependency.taskDatabaseRepository.update(runningTask.id, {
+        status: 'PENDING'
+      })
+    }
+
+    console.log(`Converted ${startupTasksWithRunningStatus.length} tasks to PENDING status`);
 
     while (true) {
       const tasks = await this.dependency.taskDatabaseRepository.findMany({
@@ -39,19 +53,27 @@ export default class WorkersStartUseCase
           eq: 'PENDING'
         }
       });
+
+      console.log(`Found ${tasks.length} tasks with pending status`);
       
       for(const task of tasks) {
         try {
-          const result = await pool.run(task);
-
-          await this.dependency.taskDatabaseRepository.update(task.id, {
-            error: null,
-            status: "DONE",
-            result: result,
-            startTime: new Date(),
-
-
-          })
+          const result = pool.run(task).then( async (result) => {
+            console.log(result);
+            await this.dependency.taskDatabaseRepository.update(task.id, {
+              error: null,
+              status: "DONE",
+              result: result ?? undefined,
+              endTime: new Date(),
+            });
+          }).catch(async e => {
+            const logNumber = await handleLog(e);
+            await this.dependency.taskDatabaseRepository.update(task.id, {
+              error: `Error message: ${e.message}. Full log ${logNumber}`,
+              status: 'FAILED',
+              endTime: new Date()
+            })
+          });
         } catch (e: any) {
           const logNumber = await handleLog(e);
           await this.dependency.taskDatabaseRepository.update(task.id, {
