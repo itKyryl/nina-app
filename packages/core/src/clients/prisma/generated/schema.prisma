@@ -55,7 +55,7 @@ datasource db {
 model Settings {
   id         Int      @id @default(autoincrement())
   createDate DateTime @default(now())
-  updateDate DateTime @updatedAt
+  updateDate DateTime @default(now()) @updatedAt
 
   isActive         Boolean
   name             String
